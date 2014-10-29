@@ -1,3 +1,5 @@
+DDoS detection plugin for NfSen
+
 DESCRIPTION:
 	This plugin detects DDoS attacks and displays the result for each 
 	timeslot. Several indices are counted for each timeslot data and are 
