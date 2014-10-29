@@ -1,0 +1,43 @@
+DESCRIPTION:
+	This plugin detects DDoS attacks and displays the result for each timeslot.
+	several indices are counted for each timeslot data and are saved in
+	the database. such as: total bytes sent and received during each timeslot,
+	total packets, number of similar packets (two packets are assumed similar
+	if they are of the same size) and the percentage of the most often 
+	repeated packet.
+	DDoS is detected if the following two conditions are met:
+	    1. total bytes in this flow are greater than the average number
+	        of total bytes during last $interval period **times** some coefficient.
+	    2. percentage of similar packets in this flow is greater than the
+	        average number of such percentage during last $interval period
+		**PLUS** some coefficient;
+		if either of the above two conditions are not met, no DDoS is detected;
+			    
+	This is mostly the testing release, so these coefficients may be
+	changed according to your needs. see ($INTERVAL, $PERCENTAGE_COEFFICIENT
+	and BYTE_COEFFICIENT) in gabriel.pm.
+	Increase $INTERVAL if you want to consider older flows when detecting DDoS.
+	Increase $PERCENTAGE_COEFFICIENT and $BYTE_COEFFICIENT if a normal flow is 
+	detected as an attack, or decrease them if some attacks are not detected.
+  
+	in the case of bugs, misbehaviour, problems or ideas, write at
+	cert@dea.gov.ge
+
+
+INSTALLATION:
+	1) Create a MySQL database, according to gabriel.sql file.
+
+	2) Copy the Backend files into $BACKEND_PLUGINDIR and frontend files into $FRONTEND_PLUGINDIR
+	
+	3) Open the gabriel.pm file and set $DB_USER and $DB_PASS to your DB username and password.
+
+	4) Read the overall description on top of this file, because you may need to change
+	$INTERVAL, $PERCENTAGE_COEFFICIENT and $BYTE_COEFFICIENT too (in gabriel.pm), depending on your needs.
+
+	make sure, when running the plugin for the first time (when database is empty), there is no
+	ongoing DDoS attack, because, it won't be detected as an attack and will be assumed as the
+	normal flow. which may cause that later attacks go undetected too.
+
+
+Remember, this is a testing release only. Don't depend on it too much. if you detect some 
+misbehaviour, or have some ideas how to improve this plugin, don't hesitate to write us at cert@dea.gov.ge
