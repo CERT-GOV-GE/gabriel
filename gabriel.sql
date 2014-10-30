@@ -34,9 +34,8 @@ CREATE TABLE `main` (
   `total_packets` bigint(20) NOT NULL,
   `popular_packet_size` bigint(20) NOT NULL,
   `popular_packet_percentage` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idmain_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-29 14:52:23
+-- Dump completed on 2014-10-30 11:34:29
