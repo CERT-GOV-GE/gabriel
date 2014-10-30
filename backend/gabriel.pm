@@ -49,7 +49,6 @@ package gabriel;
 use strict;
 use Sys::Syslog;
 use List::MoreUtils qw(firstidx);
-use lib '/usr/local/nfsen/libexec/';
 use NfProfile;
 my $dbh;
 
