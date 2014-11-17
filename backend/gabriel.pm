@@ -36,11 +36,11 @@
 #    changed according to your needs. see ($INTERVAL, $PERCENTAGE_COEFFICIENT
 #    and BYTE_COEFFICIENT) below.
 #    Increase $INTERVAL if you want to consider older flows when detecting DDoS.
-#    Increase $PERCENTAGE_COEFFICIENT and $BYTE_COEFFICIENT if a normal flow is 
+#    Increase $PERCENTAGE_COEFFICIENT and $BYTE_COEFFICIENT if normal is 
 #    detected as an attack, or decrease them if some attacks are not detected.
 #    
 #    in the case of bugs, misbehaviour, problems or ideas, write at
-#    cert@dea.gov.ge
+#    ndarjania@dea.gov.ge
 #
 
 package gabriel;
@@ -48,7 +48,6 @@ package gabriel;
 # highly recommended for good style Perl programming
 use strict;
 use Sys::Syslog;
-use List::MoreUtils qw(firstidx);
 use NfProfile;
 my $dbh;
 
@@ -193,18 +192,20 @@ sub count_bytes {
 
     syslog('debug', "netflow sources is: $netflow_sources");
     my $str = "$nfdump -M $netflow_sources -r nfcapd.$timeslot -A proto -o  csv";
-    my @output;
-    @output = `$nfdump -M $netflow_sources -r nfcapd.$timeslot -A proto -o  csv`;
+    my @output = `$str`;
     my $len = @output;
 
     syslog('debug', "output: @output");
-    my $statistics_idx = firstidx {$_ eq "Summary\n"} @output;
-    $statistics_idx = 7;
+    my $statistics_idx;
+    for (my $i = 0; $i < @output; $i++) {
+	if ($output[$i] eq "Summary\n") {
+	    $statistics_idx = $i;
+	}
+    }
     my $headers_index = $statistics_idx + 1;
     my @headers_arr = split(',', $output[$headers_index]);
     my @values_arr = split(',', $output[$headers_index + 1]);
-    my $index = firstidx {$_ eq "bytes"} @headers_arr;
-    my $res = $values_arr[$index];
+    my $res = $values_arr[1]; # bytes
 
     return $res;
 }
