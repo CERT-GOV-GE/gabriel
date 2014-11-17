@@ -37,7 +37,13 @@ INSTALLATION:
 	3) Open the gabriel.pm file and set $DB_USER and $DB_PASS to your DB 
 	username and password.
 
-	4) Read the overall description on top of this file, because you may 
+	4) Add 'gabriel' in the plugins section of nfsen.conf file.
+	   Like this:
+		@plugins = (
+			[ '*',     'gabriel' ],
+		);
+
+	5) Read the overall description on top of this file, because you may 
 	need to change $INTERVAL, $PERCENTAGE_COEFFICIENT and $BYTE_COEFFICIENT
 	too (in gabriel.pm), depending on your needs.
 
@@ -45,6 +51,13 @@ INSTALLATION:
 	is empty), there is no ongoing DDoS attack, because, it won't be 
 	detected as an attack and will be assumed as the normal flow. which may 
 	cause that later attacks go undetected too.
+
+After installing, open the NfSen plugins page in your browser and go to 
+"gabriel" tab. You will see a form, where you can give parameters such as
+"time interval" and "sources" you are interested in and click submit. If 
+an attack was detected during the given time interval, for any of the sources,
+you will see it.
+
 
 
 Remember, this is a testing release only. Don't depend on it too much. 
