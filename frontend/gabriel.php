@@ -66,11 +66,13 @@ function draw_search($plugin_id)
         <input type="time" onchange="values_changed()" name="end_time" id="end_time">
         </br>
         <input type="hidden" name="submitted" value="true">
+        <span> toggle all: </span>
+        <input type="checkbox" id="all_sources" checked="true" name="all_sources" onchange="toggle_all_sources()">
 <?php
         for ($i = 0; $i < count($sources); $i++) {
  ?>         
         <span> <?=$sources[$i]?>: </span>
- <input type="checkbox" id="<?=$sources[$i]?>" checked="true" name="<?=$sources[$i]?>" onchange="checkbox_changed('<?=$sources[$i]?>')">
+ <input type="checkbox" class="sources" id="<?=$sources[$i]?>" checked="true" name="<?=$sources[$i]?>" onchange="checkbox_changed('<?=$sources[$i]?>')">
 <?php
         }
 ?>
@@ -99,6 +101,7 @@ function update_session_variables($plugin_id)
         $_SESSION['plugin'][$plugin_id]["end_time"] = $_GET["end_time"];
         $_SESSION['plugin'][$plugin_id]["end_time"] = $_GET["end_time"];
         $_SESSION['plugin'][$plugin_id]["attack"] = $_GET["attack"];
+        $_SESSION['plugin'][$plugin_id]["all_sources"] = $_GET["all_sources"];
 	
         $_SESSION['plugin'][$plugin_id]['sources']  = array();
         foreach ($_SESSION['profileinfo']["channel"] as $channel) {
@@ -121,7 +124,8 @@ function gabriel_Run( $plugin_id ) {
         } else {
                 // just page refressh
         }
-        draw_search($plugin_id)
+        draw_search($plugin_id);
+
 ?>
         <TABLE BORDER=0>
                 <TR BGCOLOR="#87D3D3">
